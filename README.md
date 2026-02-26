@@ -46,9 +46,8 @@ settings.gradle.kts
 - Create a Kubernetes **Job** that runs the script
 - A background reconciler:
     - loads unfinished executions from DB
-    - checks Kubernetes job status
-    - when finished: fetches pod logs + exit code
-    - stores outcome and marks execution as `FINISHED`
+    - checks Kubernetes job status and updates DB if the status is different from the one in DB
+    - when finished: stores outcome and marks execution as `FINISHED`
 - Has **GET** endpoint to get execution status by request id of a script execution.
 ## Requirements
 
