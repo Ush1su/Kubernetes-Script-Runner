@@ -2,6 +2,8 @@
 
 A small Spring Boot Kotlin service that accepts a shell script via HTTP, creates a separate Kubernetes Job to run it, and stores execution state in **PostgreSQL**. A background reconciler/poller updates unfinished executions by querying Kubernetes and when script is finished collects the outcome (Script outcome: Failed, Succeeded, Error).
 
+The application is configured to run against a local Kubernetes cluster by default, but can be connected to any hosted cluster by adjusting Kubernetes configuration (kubeconfig or in-cluster settings).
+
 ## Project structure
 ```text
 k8s/
