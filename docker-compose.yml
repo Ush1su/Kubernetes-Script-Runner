@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: executor-postgres
+    environment:
+      POSTGRES_DB: executor
+      POSTGRES_USER: executor_user
+      POSTGRES_PASSWORD: executor_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U executor_user -d executor"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: .
+    container_name: executor-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/executor
+      SPRING_DATASOURCE_USERNAME: executor_user
+      SPRING_DATASOURCE_PASSWORD: executor_pass
+
+      SPRING_FLYWAY_ENABLED: "true"
+      SERVER_PORT: "8080"
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
