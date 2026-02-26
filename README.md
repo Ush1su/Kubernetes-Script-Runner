@@ -47,7 +47,7 @@ settings.gradle.kts
 - A background reconciler:
     - loads unfinished executions from DB
     - checks Kubernetes job status and updates DB if the status is different from the one in DB
-    - when finished: stores outcome and marks execution as `FINISHED`
+    - when finished: stores outcome (`SUCCEEDED`, `FAILED`, or ERROR) and marks execution as `FINISHED`
 - Has **GET** endpoint to get execution status by request id of a script execution.
 ## Requirements
 
